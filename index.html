@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Chart.js-Multi line charts </title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.js"></script>
+</head>
+<body>
+    <div style="margin-left:5%;margin-right:5%">
+        <canvas id="myLineChart" style="width:100%;max-width:1800px"></canvas>
+    </div>
+
+    <input type="file" name="inputfile"
+            id="inputfile">
+    <br>
+
+    <pre id="output"></pre>
+
+
+    <script>
+        var xValues = [2011, 2012, 2013, 2014, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2012, 2013, 2014, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2012, 2013, 2014, 2016,
+					2017, 2018, 2019, 2020, 2021, 2022, 2012, 2013, 2014, 2016, 2017, 2018, 2019, 2020, 2021, 2022,
+					2017, 2018, 2019, 2020, 2021, 2022, 2012, 2013, 2014, 2016, 2017, 2018, 2019, 2020, 2021, 2022];
+
+		var data1 = [100, 500, 600, 800, 700, 900, 1200, 850, 970, 750, 1100, 100, 500, 600, 800, 700, 900, 1200, 850, 970, 750, 1100];
+		var data2 = [98, 450, 750, 900, 650, 988, 1550, 880, 600, 800, 1300];
+		var data3 = [88, 800, 450, 550, 350, 820, 620, 730, 740, 660, 669];
+        const  MultiLinechartData = {
+            type: "line",
+            data: {
+                labels: xValues,
+                datasets: [
+                    {
+                        label: 'JavaScript Developer',
+                        lineTension: 0,
+                        backgroundColor: 'blue',
+                        borderColor: 'blue',
+                        data: data1
+                    },
+                    {
+                        label: 'React Developer',
+                        lineTension: 0,
+                        borderColor: 'green',
+                        data: data2
+                    },
+                    {
+                        label: 'Chart Js Developer',
+                        lineTension: 0,
+                        borderColor: 'red',
+                        data: data3
+                    }
+                ]
+            },
+            options: {
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Software developers in organization',
+                    }
+                },
+                scales: {
+                    x: {
+                        display: true,
+                        title: {
+                            display: true,
+                            text: 'Year'
+                        }
+                    },
+                    y: {
+                        display: true,
+                        title: {
+                            display: true,
+                            text: 'Employees'
+                        }
+                    }
+                }
+            }
+        };
+
+        // document.getElementById('inputfile').onchange = function(){
+        //     var file = this.files[0];
+        //     var reader = new FileReader();
+        //     reader.onload = function(progressEvent){
+        //         var fileContentArray = this.result.split(/\r\n|\n/);
+        //         for(var line = 0; line < lines.length-1; line++){
+        //         console.log(line + " --> "+ lines[line]);
+        //         }
+        //     };
+        //     reader.readAsText(file);
+        // };
+
+		document.getElementById('inputfile')
+			.addEventListener('change', function() {
+                var fr=new FileReader();
+                fr.onload=function(){
+                    document.getElementById('output').textContent=fr.result;
+                    console.log(fr.result.length);
+                }
+                fr.readAsText(this.files[0]);
+                new Chart("myLineChart", MultiLinechartData );
+		});
+
+
+    </script>
+
+</body>
+</html>
