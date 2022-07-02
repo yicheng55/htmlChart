@@ -13,19 +13,23 @@
             id="inputfile">
     <br>
 
+    <input type="file" name="inputfile1"
+            id="inputfile1">
+    <br>
+
     <pre id="output"></pre>
 
 
     <script>
-        var xValues = [2011, 2012, 2013, 2014, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2012, 2013, 2014, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2012, 2013, 2014, 2016,
+        let xValues = [2011, 2012, 2013, 2014, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2012, 2013, 2014, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2012, 2013, 2014, 2016,
 					2017, 2018, 2019, 2020, 2021, 2022, 2012, 2013, 2014, 2016, 2017, 2018, 2019, 2020, 2021, 2022,
 					2017, 2018, 2019, 2020, 2021, 2022, 2012, 2013, 2014, 2016, 2017, 2018, 2019, 2020, 2021, 2022];
 
-		var data1 = [100, 500, 600, 800, 700, 900, 1200, 850, 970, 750, 1100, 100, 500, 600, 800, 700, 900, 1200, 850, 970, 750, 1100];
-		var data2 = [98, 450, 750, 900, 650, 988, 1550, 880, 600, 800, 1300];
-		var data3 = [88, 800, 450, 550, 350, 820, 620, 730, 740, 660, 669];
+		// let data1 = [100, 500, 600, 800, 700, 900, 1200, 850, 970, 750, 1100, 100, 500, 600, 800, 700, 900, 1200, 850, 970, 750, 1100];
+        let data1 = [];
+		let data2 = [98, 450, 750, 900, 650, 988, 1550, 880, 600, 800, 1300];
+		let data3 = [88, 800, 450, 550, 350, 820, 620, 730, 740, 660, 669];
 
-        var rfidarray = []; //rfid data from reader, 整理一次讀取只有RFID數據
         const  MultiLinechartData = {
             type: "line",
             data: {
@@ -78,11 +82,13 @@
             }
         };
 
-        // document.getElementById('inputfile').onchange = function(){
+        // document.getElementById('inputfile1').onclick = function(){
+        //     // alert('Test...');
         //     var file = this.files[0];
         //     var reader = new FileReader();
         //     reader.onload = function(progressEvent){
         //         var fileContentArray = this.result.split(/\r\n|\n/);
+        //         var lines = fileContentArray;
         //         for(var line = 0; line < lines.length-1; line++){
         //         console.log(line + " --> "+ lines[line]);
         //         }
@@ -92,15 +98,17 @@
 
 
 		document.getElementById('inputfile')
-			.addEventListener('change', function() {
-                var fr=new FileReader();
+			.addEventListener('change', async function() {
+                let fr=new FileReader();
                 fr.onload=function(){
                     document.getElementById('output').textContent=fr.result;
                     console.log(fr.result.length);
+                    data1 = [];
                     // console.log(this.result);
-                    var fileContentArray = this.result.split(/\r\n|\n/);
+                    var fileContentArray = this.result.trim().split(/\r\n|\n/);
                     var lines = fileContentArray;
                     let tempstr = '';
+                    let rfidarray = []; //rfid data from reader, 整理一次讀取只有RFID數據
                     lines.forEach(function(valstr, index, arr) {
                         // console.log(index + " --> "+ valstr.slice(53));
                         if (valstr.slice(53).includes('@END')) { //讀取結束
@@ -108,7 +116,9 @@
                             console.log('rfidarray.length=' + rfidarray.length );
                             if( rfidarray.length > 0)
                             {
-                                var rfidsoled = rfidsole(rfidarray);
+                                let rfidsoled = rfidsole(rfidarray);
+                                console.log(rfidsoled[0].COUNT);
+                                data1.push(rfidsoled[0].COUNT);
                                 rfidarray = []; //Reset array
                             }
 
@@ -122,18 +132,22 @@
                             };
 
                             rfid.EPC = valstr.slice(53);
-                            console.log(rfid.EPC);
+                            // console.log(rfid.EPC);
+                            rfid.TIME = valstr.slice(1,24);
+                            // console.log(rfid.TIME);
                             rfidarray.push(rfid);
                         }
 
                     });
-
+                    console.log("myLineChart");
+                    console.log(data1);
+                    new Chart("myLineChart", MultiLinechartData );
                     // for(var line = 0; line < lines.length-1; line++){
                     //     console.log(line + " --> "+ lines[line]);
                     // }
                 }
-                fr.readAsText(this.files[0]);
-                new Chart("myLineChart", MultiLinechartData );
+                await fr.readAsText(this.files[0]);
+
 		});
 
         let rfidsole = function(rfid) {
@@ -147,7 +161,7 @@
                 var index;
                 for (let i = 0; i < rfid.length; i++) {
                     // console.log(ele.EPC + '  :  ' + rfid[i].EPC);
-                    if (ele.EPC == rfid[i].EPC) {
+                    if (ele.EPC === rfid[i].EPC) {
                         index = i;
                         break;
                     }
@@ -171,9 +185,10 @@
                 return b.COUNT - a.COUNT;
             })
 
-            console.trace(sid);
-            console.trace('sid.length= ' + sid.length);
-            console.log(sid);
+            // console.trace(sid);
+            // console.trace('sid.length= ' + sid.length);
+            console.log('sid.length= ' + sid.length);
+            // console.log(sid);
             return sid;
         }
 
