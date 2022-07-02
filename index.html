@@ -24,6 +24,8 @@
 		var data1 = [100, 500, 600, 800, 700, 900, 1200, 850, 970, 750, 1100, 100, 500, 600, 800, 700, 900, 1200, 850, 970, 750, 1100];
 		var data2 = [98, 450, 750, 900, 650, 988, 1550, 880, 600, 800, 1300];
 		var data3 = [88, 800, 450, 550, 350, 820, 620, 730, 740, 660, 669];
+
+        var rfidarray = []; //rfid data from reader, 整理一次讀取只有RFID數據
         const  MultiLinechartData = {
             type: "line",
             data: {
@@ -88,12 +90,40 @@
         //     reader.readAsText(file);
         // };
 
+        let rfid = { //Save RFID format
+            EPC: '',
+            TID: '',
+            TIME: '',
+            COUNT: 0
+        };
 		document.getElementById('inputfile')
 			.addEventListener('change', function() {
                 var fr=new FileReader();
                 fr.onload=function(){
                     document.getElementById('output').textContent=fr.result;
                     console.log(fr.result.length);
+                    // console.log(this.result);
+                    var fileContentArray = this.result.split(/\r\n|\n/);
+                    var lines = fileContentArray;
+                    let tempstr = '';
+                    lines.forEach(function(valstr, index, arr) {
+                        // console.log(index + " --> "+ valstr.slice(53));
+                        if (valstr.slice(53).includes('@END')) { //讀取結束
+
+                            console.log('rfidarray.length=' + rfidarray.length );
+                            rfidarray = []; //Reset array
+                        }
+                        else{
+                            rfid.EPC = valstr.slice(53);
+                            console.log(rfid.EPC);
+                            rfidarray.push(rfid);
+                        }
+
+                    });
+
+                    // for(var line = 0; line < lines.length-1; line++){
+                    //     console.log(line + " --> "+ lines[line]);
+                    // }
                 }
                 fr.readAsText(this.files[0]);
                 new Chart("myLineChart", MultiLinechartData );
