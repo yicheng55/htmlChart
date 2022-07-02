@@ -90,12 +90,7 @@
         //     reader.readAsText(file);
         // };
 
-        let rfid = { //Save RFID format
-            EPC: '',
-            TID: '',
-            TIME: '',
-            COUNT: 0
-        };
+
 		document.getElementById('inputfile')
 			.addEventListener('change', function() {
                 var fr=new FileReader();
@@ -111,9 +106,21 @@
                         if (valstr.slice(53).includes('@END')) { //讀取結束
 
                             console.log('rfidarray.length=' + rfidarray.length );
-                            rfidarray = []; //Reset array
+                            if( rfidarray.length > 0)
+                            {
+                                var rfidsoled = rfidsole(rfidarray);
+                                rfidarray = []; //Reset array
+                            }
+
                         }
                         else{
+                            let rfid = { //Save RFID format
+                                EPC: '',
+                                TID: '',
+                                TIME: '',
+                                COUNT: 0
+                            };
+
                             rfid.EPC = valstr.slice(53);
                             console.log(rfid.EPC);
                             rfidarray.push(rfid);
@@ -129,6 +136,46 @@
                 new Chart("myLineChart", MultiLinechartData );
 		});
 
+        let rfidsole = function(rfid) {
+            var len = rfid.length;
+            let rfidres = [];
+            let rfidarrayrecsort = [];
+            let foundindex = -1;
+
+            var sid = rfid.filter(function(ele, pos) {
+                // LoggerRFID.trace('rfidsole: ' + ele.EPC + ',' + pos + ',' + rfid.indexOf(ele.EPC));
+                var index;
+                for (let i = 0; i < rfid.length; i++) {
+                    // console.log(ele.EPC + '  :  ' + rfid[i].EPC);
+                    if (ele.EPC == rfid[i].EPC) {
+                        index = i;
+                        break;
+                    }
+                }
+                // console.log(index);
+                return index == pos; //只找第一次出現的
+            });
+
+            // console.log(sid);
+
+            //Count
+            sid.forEach(elem => {
+                for (let i = 0; i < rfid.length; i++) {
+                    if (elem.EPC == rfid[i].EPC) {
+                        elem.COUNT++;
+                    }
+                }
+            });
+
+            sid.sort(function(a, b) {
+                return b.COUNT - a.COUNT;
+            })
+
+            console.trace(sid);
+            console.trace('sid.length= ' + sid.length);
+            console.log(sid);
+            return sid;
+        }
 
     </script>
 
