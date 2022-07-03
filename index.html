@@ -49,8 +49,8 @@
     <input type="file" name="inputfile" id="inputfile">
     <br>
 
-    <input type="file" name="inputfile1" id="inputfile1">
-    <br>
+    <!-- <input type="file" name="inputfile1" id="inputfile1">
+    <br> -->
 
     <pre id="output"></pre>
 
@@ -96,19 +96,25 @@
                         lineTension: 0,
                         backgroundColor: 'blue',
                         borderColor: 'blue',
-                        data: data1
+                        data: []
                     },
                     {
                         label: 'React Developer',
                         lineTension: 0,
                         borderColor: 'green',
-                        data: data2
+                        data: []
                     },
                     {
                         label: 'Chart Js Developer',
                         lineTension: 0,
                         borderColor: 'red',
-                        data: data3
+                        data: []
+                    },
+                    {
+                        label: 'Chart Js Developer',
+                        lineTension: 0,
+                        borderColor: 'brown',
+                        data: []
                     }
                 ]
             },
@@ -137,6 +143,14 @@
                 }
             }
         };
+        function getRandomColor() {
+        var letters = '0123456789ABCDEF';
+        var color = '#';
+        for (var i = 0; i < 6; i++) {
+            color += letters[Math.floor(Math.random() * 16)];
+        }
+        return color;
+        }
 
         // document.getElementById('inputfile1').onclick = function(){
         //     // alert('Test...');
@@ -164,6 +178,7 @@
                 console.log(fr.result.length);
                 data1 = [];
                 data2 = [];
+                data3 = [];
                 xValues = [];
                 // console.log(this.result);
                 var fileContentArray = this.result.trim().split(/\r\n|\n/);
@@ -238,13 +253,42 @@
 
                 });
                 console.log("myLineChart");
+
+                console.log("data.datasets = %s", MultiLinechartData.data.datasets.length);
+
+                rfidarrayrec.forEach(function (elem, index, arr){
+                    if( index < MultiLinechartData.data.datasets.length)
+                    {
+                        MultiLinechartData.data.datasets[index].data = elem.Count;
+                        MultiLinechartData.data.datasets[index].label = elem.EPC;
+                    }
+                    else{
+
+                        let datasets = {
+                                label: 'Chart Js Developer',
+                                lineTension: 0,
+                                borderColor: getRandomColor(),
+                                data: []
+                        };
+                        datasets.data = elem.Count;
+                        datasets.label = elem.EPC;
+                        MultiLinechartData.data.datasets.push(datasets);
+
+                    }
+
+                });
                 // console.log(data1);
-                MultiLinechartData.data.datasets[0].data = data1;
-                MultiLinechartData.data.datasets[1].data = data2;
-                MultiLinechartData.data.datasets[2].data = '';
+                // MultiLinechartData.data.datasets[0].data = rfidarrayrec[0].Count;
+                // MultiLinechartData.data.datasets[0].label = rfidarrayrec[0].EPC;
+                // MultiLinechartData.data.datasets[1].data = rfidarrayrec[1].Count;
+                // MultiLinechartData.data.datasets[1].label = rfidarrayrec[1].EPC;
+                // MultiLinechartData.data.datasets[2].data = rfidarrayrec[2].Count;
+                // MultiLinechartData.data.datasets[2].label = rfidarrayrec[2].EPC;
+                // MultiLinechartData.data.datasets[3].data = rfidarrayrec[3].Count;
+                // MultiLinechartData.data.datasets[3].label = rfidarrayrec[3].EPC;
                 MultiLinechartData.data.labels = xValues;
-                console.log(MultiLinechartData.data.datasets[0].data);
-                console.log(MultiLinechartData.data.labels);
+                // console.log(MultiLinechartData.data.datasets[0].data);
+                // console.log(MultiLinechartData.data.labels);
                 let mychart = new Chart("myLineChart", MultiLinechartData);
                 console.log(MultiLinechartData);
                 // for(var line = 0; line < lines.length-1; line++){
