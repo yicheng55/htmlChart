@@ -68,14 +68,14 @@
                         display: true,
                         title: {
                             display: true,
-                            text: 'Year'
+                            text: 'Time'
                         }
                     },
                     y: {
                         display: true,
                         title: {
                             display: true,
-                            text: 'Employees'
+                            text: 'Counts'
                         }
                     }
                 }
@@ -110,6 +110,7 @@
                     var lines = fileContentArray;
                     let tempstr = '';
                     let rfidarray = []; //rfid data from reader, 整理一次讀取只有RFID數據
+                    console.log('lines.length=' + lines.length );
                     lines.forEach(function(valstr, index, arr) {
                         // console.log(index + " --> "+ valstr.slice(53));
                         if (valstr.slice(53).includes('@END')) { //讀取結束
@@ -121,8 +122,27 @@
                                 console.log(rfidsoled[0].COUNT);
                                 data1.push(rfidsoled[0].COUNT);
                                 xValues.push(rfidsoled[0].TIME.slice(11) );
-                                rfidarray = []; //Reset array
+
                             }
+                            else{
+                                let rfidsoled = [];
+                                let rfid = { //Save RFID format
+                                    EPC: '',
+                                    TID: '',
+                                    TIME: '',
+                                    COUNT: 0
+                                };
+
+                                rfid.EPC = '';
+                                // console.log(rfid.EPC);
+                                rfid.TIME = valstr.slice(1,24);
+                                // console.log(rfid.TIME);
+                                rfidsoled.push(rfid);
+                                // console.log(rfidsoled[0].COUNT);
+                                data1.push(rfidsoled[0].COUNT);
+                                xValues.push(rfidsoled[0].TIME.slice(11) );
+                            }
+                            rfidarray = []; //Reset array
 
                         }
                         else{
@@ -142,7 +162,7 @@
 
                     });
                     console.log("myLineChart");
-                    console.log(data1);
+                    // console.log(data1);
                     MultiLinechartData.data.datasets[0].data = data1;
                     MultiLinechartData.data.datasets[1].data = '';
                     MultiLinechartData.data.datasets[2].data = '';
