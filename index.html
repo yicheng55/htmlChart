@@ -104,6 +104,7 @@
                     document.getElementById('output').textContent=fr.result;
                     console.log(fr.result.length);
                     data1 = [];
+                    data2 = [];
                     xValues = [];
                     // console.log(this.result);
                     var fileContentArray = this.result.trim().split(/\r\n|\n/);
@@ -120,6 +121,16 @@
                             {
                                 let rfidsoled = rfidsole(rfidarray);
                                 console.log(rfidsoled[0].COUNT);
+                                if( rfidsoled.length === 2)
+                                {
+                                    console.log( 'rfidsoled[1]:' +  rfidsoled[1].COUNT);
+                                    data2.push(rfidsoled[1].COUNT);
+
+                                }
+                                else{
+                                    data2.push(0);
+                                }
+
                                 data1.push(rfidsoled[0].COUNT);
                                 xValues.push(rfidsoled[0].TIME.slice(11) );
 
@@ -140,6 +151,7 @@
                                 rfidsoled.push(rfid);
                                 // console.log(rfidsoled[0].COUNT);
                                 data1.push(rfidsoled[0].COUNT);
+                                data2.push(0);
                                 xValues.push(rfidsoled[0].TIME.slice(11) );
                             }
                             rfidarray = []; //Reset array
@@ -164,7 +176,7 @@
                     console.log("myLineChart");
                     // console.log(data1);
                     MultiLinechartData.data.datasets[0].data = data1;
-                    MultiLinechartData.data.datasets[1].data = '';
+                    MultiLinechartData.data.datasets[1].data = data2;
                     MultiLinechartData.data.datasets[2].data = '';
                     MultiLinechartData.data.labels = xValues;
                     console.log(MultiLinechartData.data.datasets[0].data);
