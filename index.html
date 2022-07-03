@@ -29,6 +29,7 @@
         let data1 = [];
 		let data2 = [98, 450, 750, 900, 650, 988, 1550, 880, 600, 800, 1300];
 		let data3 = [88, 800, 450, 550, 350, 820, 620, 730, 740, 660, 669];
+        let rfidarrayrec = []; //rfid data from reader, 保留 EPC + COUNT[]
 
         const  MultiLinechartData = {
             type: "line",
@@ -100,6 +101,10 @@
 		document.getElementById('inputfile')
 			.addEventListener('change', async function() {
                 let fr=new FileReader();
+
+                // rfidarrayrec.push(5,8);
+                // console.log(rfidarrayrec);
+
                 fr.onload=function(){
                     document.getElementById('output').textContent=fr.result;
                     console.log(fr.result.length);
@@ -204,11 +209,29 @@
                     // console.log(ele.EPC + '  :  ' + rfid[i].EPC);
                     if (ele.EPC === rfid[i].EPC) {
                         index = i;
+                        // console.log('ele.EPC index= %s , pos= %s' ,index, pos);
                         break;
                     }
                 }
                 // console.log(index);
-                return index == pos; //只找第一次出現的
+                let EPCNum = {
+                    EPC: '',
+                    Count: []
+                };
+
+                // console.log('rfidarrayrec:');
+                // console.log(rfidarrayrec);
+
+                let foundindexEPC = rfidarrayrec.findIndex(rank => rank.EPC === ele.EPC);
+                // console.log('foundindexEPC = ' + foundindexEPC);
+                if (foundindexEPC < 0 ) {
+                    EPCNum.EPC = ele.EPC;
+                    rfidarrayrec.push(EPCNum);
+                    console.log(rfidarrayrec);
+                    // console.log('rfidarrayrec.length = ' + rfidarrayrec.length);
+                    // console.log('index= %s , pos= %s' ,index, pos);
+                }
+                return index === pos; //只找第一次出現的
             });
 
             // console.log(sid);
@@ -222,9 +245,9 @@
                 }
             });
 
-            sid.sort(function(a, b) {
-                return b.COUNT - a.COUNT;
-            })
+            // sid.sort(function(a, b) {
+            //     return b.COUNT - a.COUNT;
+            // })
 
             // console.trace(sid);
             // console.trace('sid.length= ' + sid.length);
