@@ -177,10 +177,15 @@
                                 // console.log(rfidsoled[0].COUNT);
                                 data1.push(rfidsoled[0].COUNT);
                                 data2.push(0);
-                                xValues.push(rfidsoled[0].TIME.slice(11) );
-                                rfidarrayrec.forEach(function(elem, index) {
-                                    elem.Count.push(0);
-                                });
+
+                                if(rfidarrayrec.length > 0)
+                                {
+                                    xValues.push(rfidsoled[0].TIME.slice(14) );
+                                    rfidarrayrec.forEach(function(elem, index) {
+                                        elem.Count.push(0);
+                                    });
+                                }
+
                             }
                             rfidarray = []; //Reset array
 
@@ -251,12 +256,20 @@
                 // console.log('foundindexEPC = ' + foundindexEPC);
                 if (foundindexEPC < 0 ) {
                     EPCNum.EPC = ele.EPC;
+
+                    if(rfidarrayrec.length > 0)
+                    {
+                        EPCNum.Count = Array(rfidarrayrec[0].Count.length).fill(0);
+                        console.log('Count.length= %s , EPC= %s' ,rfidarrayrec[0].Count.length, rfidarrayrec[0].EPC);
+                    }
+
+                    // elem.Count.push(sid[i].COUNT);
                     rfidarrayrec.push(EPCNum);
                     // console.log(rfidarrayrec);
                     // console.log('rfidarrayrec.length = ' + rfidarrayrec.length);
                     // console.log('index= %s , pos= %s' ,index, pos);
                 }
-                console.log('index= %s , pos= %s' ,index, pos);
+                // console.log('index= %s , pos= %s' ,index, pos);
                 return index === pos; //只找第一次出現的
             });
 
