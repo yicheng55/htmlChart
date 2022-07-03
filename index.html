@@ -197,7 +197,7 @@
 		});
 
         let rfidsole = function(rfid) {
-            var len = rfid.length;
+            // var len = rfid.length;
             let rfidres = [];
             let rfidarrayrecsort = [];
             let foundindex = -1;
@@ -216,6 +216,8 @@
                 // console.log(index);
                 let EPCNum = {
                     EPC: '',
+                    TID: '',
+                    TIME: '',
                     Count: []
                 };
 
@@ -227,7 +229,7 @@
                 if (foundindexEPC < 0 ) {
                     EPCNum.EPC = ele.EPC;
                     rfidarrayrec.push(EPCNum);
-                    console.log(rfidarrayrec);
+                    // console.log(rfidarrayrec);
                     // console.log('rfidarrayrec.length = ' + rfidarrayrec.length);
                     // console.log('index= %s , pos= %s' ,index, pos);
                 }
@@ -240,18 +242,31 @@
             sid.forEach(elem => {
                 for (let i = 0; i < rfid.length; i++) {
                     if (elem.EPC == rfid[i].EPC) {
+
                         elem.COUNT++;
                     }
                 }
             });
-
+            console.log('sid.length= ' + sid.length);
+            console.log(sid);
+            //Count
+            rfidarrayrec.forEach(elem => {
+                for (let i = 0; i < sid.length; i++) {
+                    if (elem.EPC == sid[i].EPC) {
+                        elem.TIME =  sid[i].TIME;
+                        elem.Count.push(sid[i].COUNT);
+                        // elem.Count.push(parseInt(elem.COUNT));
+                    }
+                }
+            });
+            console.log(rfidarrayrec);
             // sid.sort(function(a, b) {
             //     return b.COUNT - a.COUNT;
             // })
 
             // console.trace(sid);
             // console.trace('sid.length= ' + sid.length);
-            console.log('sid.length= ' + sid.length);
+
             // console.log(sid);
             return sid;
         }
