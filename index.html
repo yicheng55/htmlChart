@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>Chart.js-Multi line charts </title>
+    <title>Chart.js-Multi line charts</title>
     <!-- <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.js"></script> -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
@@ -15,14 +15,12 @@
             height: 90%;
             overflow: auto;
         }
-
         /* #large-container {
             width: 2000px;
             height: 800px;
             overflow: hidden;
         } */
-
-
+        
         #scroll-container {
             width: calc(100% - 22px);
             height: calc(100vh - 240px);
@@ -31,11 +29,9 @@
             border: 1px solid grey;
         }
     </style>
-
 </head>
 
 <body>
-
     <div id="scroll-container">
         <div id="large-container">
             <canvas id="myLineChart"></canvas>
@@ -46,18 +42,15 @@
         <canvas id="myLineChart" style="width:100%;max-width:1840px"></canvas>
     </div> -->
 
-    <input type="file" name="inputfile" id="inputfile">
-    <br>
+    <input type="file" name="inputfile" id="inputfile" />
+    <br />
 
     <!-- <input type="file" name="inputfile1" id="inputfile1">
     <br> -->
 
     <pre id="output"></pre>
 
-
     <script>
-
-
         // (function(){
         //     var data,
         //         temp,
@@ -76,9 +69,13 @@
         // a.forEach(x => console.log(x)); // does nothing
         // b.forEach(x => console.log(x)); // works as intended
 
-        let xValues = [2011, 2012, 2013, 2014, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2012, 2013, 2014, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2012, 2013, 2014, 2016,
-            2017, 2018, 2019, 2020, 2021, 2022, 2012, 2013, 2014, 2016, 2017, 2018, 2019, 2020, 2021, 2022,
-            2017, 2018, 2019, 2020, 2021, 2022, 2012, 2013, 2014, 2016, 2017, 2018, 2019, 2020, 2021, 2022];
+        let xValues = [
+            2011, 2012, 2013, 2014, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2012,
+            2013, 2014, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2012, 2013, 2014,
+            2016, 2017, 2018, 2019, 2020, 2021, 2022, 2012, 2013, 2014, 2016, 2017,
+            2018, 2019, 2020, 2021, 2022, 2017, 2018, 2019, 2020, 2021, 2022, 2012,
+            2013, 2014, 2016, 2017, 2018, 2019, 2020, 2021, 2022,
+        ];
 
         // let data1 = [100, 500, 600, 800, 700, 900, 1200, 850, 970, 750, 1100, 100, 500, 600, 800, 700, 900, 1200, 850, 970, 750, 1100];
         let data1 = [];
@@ -90,66 +87,62 @@
             type: "line",
             data: {
                 labels: xValues,
-                datasets: [
-                    {
-                        label: 'JavaScript Developer',
-                        lineTension: 0,
-                        backgroundColor: 'blue',
-                        borderColor: 'blue',
-                        data: []
-                    },
-                    {
-                        label: 'React Developer',
-                        lineTension: 0,
-                        borderColor: 'green',
-                        data: []
-                    },
-                    {
-                        label: 'Chart Js Developer',
-                        lineTension: 0,
-                        borderColor: 'red',
-                        data: []
-                    },
-                    {
-                        label: 'Chart Js Developer',
-                        lineTension: 0,
-                        borderColor: 'brown',
-                        data: []
-                    }
-                ]
+                datasets: [{
+                    label: "JavaScript Developer",
+                    lineTension: 0,
+                    backgroundColor: "blue",
+                    borderColor: "blue",
+                    data: [],
+                }, {
+                    label: "React Developer",
+                    lineTension: 0,
+                    borderColor: "green",
+                    data: [],
+                }, {
+                    label: "Chart Js Developer",
+                    lineTension: 0,
+                    borderColor: "red",
+                    data: [],
+                }, {
+                    label: "Chart Js Developer",
+                    lineTension: 0,
+                    borderColor: "brown",
+                    data: [],
+                }, ],
             },
             options: {
                 plugins: {
                     title: {
                         display: true,
-                        text: 'Software developers in organization',
-                    }
+                        text: "Software developers in organization",
+                    },
                 },
                 scales: {
                     x: {
                         display: true,
                         title: {
                             display: true,
-                            text: 'Time'
-                        }
+                            text: "Time",
+                        },
                     },
                     y: {
                         display: true,
                         title: {
                             display: true,
-                            text: 'Counts'
-                        }
-                    }
-                }
-            }
+                            text: "Counts",
+                        },
+                    },
+                },
+            },
         };
+
         function getRandomColor() {
-        var letters = '0123456789ABCDEF';
-        var color = '#';
-        for (var i = 0; i < 6; i++) {
-            color += letters[Math.floor(Math.random() * 16)];
-        }
-        return color;
+            var letters = "0123456789ABCDEF";
+            var color = "#";
+            for (var i = 0; i < 6; i++) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
         }
 
         // document.getElementById('inputfile1').onclick = function(){
@@ -166,146 +159,144 @@
         //     reader.readAsText(file);
         // };
 
+        document
+            .getElementById("inputfile")
+            .addEventListener("change", function() {
+                let fr = new FileReader();
 
-        document.getElementById('inputfile').addEventListener('change', function () {
-            let fr = new FileReader();
+                // rfidarrayrec.push(5,8);
+                // console.log(rfidarrayrec);
 
-            // rfidarrayrec.push(5,8);
-            // console.log(rfidarrayrec);
+                fr.onload = function() {
+                    document.getElementById("output").textContent = fr.result;
+                    console.log(fr.result.length);
+                    data1 = [];
+                    data2 = [];
+                    data3 = [];
+                    xValues = [];
+                    // console.log(this.result);
+                    var fileContentArray = this.result.trim().split(/\r\n|\n/);
+                    var lines = fileContentArray;
+                    let tempstr = "";
+                    let rfidarray = []; //rfid data from reader, 整理一次讀取只有RFID數據
+                    console.log("lines.length=" + lines.length);
+                    lines.forEach(function(valstr, index, arr) {
+                        // console.log(index + " --> "+ valstr.slice(53));
+                        if (valstr.slice(53).includes("@END")) {
+                            //讀取結束
 
-            fr.onload = function () {
-                document.getElementById('output').textContent = fr.result;
-                console.log(fr.result.length);
-                data1 = [];
-                data2 = [];
-                data3 = [];
-                xValues = [];
-                // console.log(this.result);
-                var fileContentArray = this.result.trim().split(/\r\n|\n/);
-                var lines = fileContentArray;
-                let tempstr = '';
-                let rfidarray = []; //rfid data from reader, 整理一次讀取只有RFID數據
-                console.log('lines.length=' + lines.length);
-                lines.forEach(function (valstr, index, arr) {
-                    // console.log(index + " --> "+ valstr.slice(53));
-                    if (valstr.slice(53).includes('@END')) { //讀取結束
+                            console.log("rfidarray.length=" + rfidarray.length);
+                            if (rfidarray.length > 0) {
+                                let rfidsoled = rfidsole(rfidarray);
+                                console.log(rfidsoled[0].COUNT);
+                                if (rfidsoled.length === 2) {
+                                    console.log("rfidsoled[1]:" + rfidsoled[1].COUNT);
+                                    data2.push(rfidsoled[1].COUNT);
+                                } else {
+                                    data2.push(0);
+                                }
 
-                        console.log('rfidarray.length=' + rfidarray.length);
-                        if (rfidarray.length > 0) {
-                            let rfidsoled = rfidsole(rfidarray);
-                            console.log(rfidsoled[0].COUNT);
-                            if (rfidsoled.length === 2) {
-                                console.log('rfidsoled[1]:' + rfidsoled[1].COUNT);
-                                data2.push(rfidsoled[1].COUNT);
+                                data1.push(rfidsoled[0].COUNT);
+                                xValues.push(rfidsoled[0].TIME.slice(11));
+                            } else {
+                                let rfidsoled = [];
+                                let rfid = {
+                                    //Save RFID format
+                                    EPC: "",
+                                    TID: "",
+                                    TIME: "",
+                                    COUNT: 0,
+                                };
 
-                            }
-                            else {
+                                // 儲  @EN  時間
+                                rfid.EPC = "";
+                                // console.log(rfid.EPC);
+                                rfid.TIME = valstr.slice(1, 24);
+                                // console.log(rfid.TIME);
+                                rfidsoled.push(rfid);
+                                // console.log(rfidsoled[0].COUNT);
+                                data1.push(rfidsoled[0].COUNT);
                                 data2.push(0);
+
+                                if (rfidarrayrec.length > 0) {
+                                    console.log("rfidsoled:");
+                                    console.log(rfidsoled);
+                                    xValues.push(rfidsoled[0].TIME.slice(14));
+                                    rfidarrayrec.forEach(function(elem, index) {
+                                        elem.Count.push(0);
+                                    });
+                                }
                             }
-
-                            data1.push(rfidsoled[0].COUNT);
-                            xValues.push(rfidsoled[0].TIME.slice(11));
-
-                        }
-                        else {
-                            let rfidsoled = [];
-                            let rfid = { //Save RFID format
-                                EPC: '',
-                                TID: '',
-                                TIME: '',
-                                COUNT: 0
+                            rfidarray = []; //Reset array
+                        } else {
+                            let rfid = {
+                                //Save RFID format
+                                EPC: "",
+                                TID: "",
+                                TIME: "",
+                                COUNT: 0,
                             };
 
-                            rfid.EPC = '';
+                            rfid.EPC = valstr.slice(53);
                             // console.log(rfid.EPC);
                             rfid.TIME = valstr.slice(1, 24);
                             // console.log(rfid.TIME);
-                            rfidsoled.push(rfid);
-                            // console.log(rfidsoled[0].COUNT);
-                            data1.push(rfidsoled[0].COUNT);
-                            data2.push(0);
-
-                            if (rfidarrayrec.length > 0) {
-                                xValues.push(rfidsoled[0].TIME.slice(14));
-                                rfidarrayrec.forEach(function (elem, index) {
-                                    elem.Count.push(0);
-                                });
-                            }
-
+                            rfidarray.push(rfid);
                         }
-                        rfidarray = []; //Reset array
+                    });
+                    console.log("myLineChart");
 
-                    }
-                    else {
-                        let rfid = { //Save RFID format
-                            EPC: '',
-                            TID: '',
-                            TIME: '',
-                            COUNT: 0
-                        };
+                    console.log(
+                        "data.datasets = %s",
+                        MultiLinechartData.data.datasets.length
+                    );
 
-                        rfid.EPC = valstr.slice(53);
-                        // console.log(rfid.EPC);
-                        rfid.TIME = valstr.slice(1, 24);
-                        // console.log(rfid.TIME);
-                        rfidarray.push(rfid);
-                    }
-
-                });
-                console.log("myLineChart");
-
-                console.log("data.datasets = %s", MultiLinechartData.data.datasets.length);
-
-                rfidarrayrec.forEach(function (elem, index, arr){
-                    if( index < MultiLinechartData.data.datasets.length)
-                    {
-                        MultiLinechartData.data.datasets[index].data = elem.Count;
-                        MultiLinechartData.data.datasets[index].label = elem.EPC;
-                    }
-                    else{
-
-                        let datasets = {
-                                label: 'Chart Js Developer',
+                    rfidarrayrec.forEach(function(elem, index, arr) {
+                        if (index < MultiLinechartData.data.datasets.length) {
+                            MultiLinechartData.data.datasets[index].data = elem.Count;
+                            MultiLinechartData.data.datasets[index].label =
+                                elem.EPC.slice(0, 2) + "xx" + elem.EPC.slice(21);
+                        } else {
+                            let datasets = {
+                                label: "Chart Js Developer",
                                 lineTension: 0,
                                 borderColor: getRandomColor(),
-                                data: []
-                        };
-                        datasets.data = elem.Count;
-                        datasets.label = elem.EPC;
-                        MultiLinechartData.data.datasets.push(datasets);
+                                data: [],
+                            };
+                            datasets.data = elem.Count;
+                            datasets.label =
+                                elem.EPC.slice(0, 2) + "xx" + elem.EPC.slice(20);
+                            MultiLinechartData.data.datasets.push(datasets);
+                        }
+                    });
+                    // console.log(data1);
+                    // MultiLinechartData.data.datasets[0].data = rfidarrayrec[0].Count;
+                    // MultiLinechartData.data.datasets[0].label = rfidarrayrec[0].EPC;
+                    // MultiLinechartData.data.datasets[1].data = rfidarrayrec[1].Count;
+                    // MultiLinechartData.data.datasets[1].label = rfidarrayrec[1].EPC;
+                    // MultiLinechartData.data.datasets[2].data = rfidarrayrec[2].Count;
+                    // MultiLinechartData.data.datasets[2].label = rfidarrayrec[2].EPC;
+                    // MultiLinechartData.data.datasets[3].data = rfidarrayrec[3].Count;
+                    // MultiLinechartData.data.datasets[3].label = rfidarrayrec[3].EPC;
+                    MultiLinechartData.data.labels = xValues;
+                    // console.log(MultiLinechartData.data.datasets[0].data);
+                    // console.log(MultiLinechartData.data.labels);
+                    let mychart = new Chart("myLineChart", MultiLinechartData);
+                    console.log(MultiLinechartData);
+                    // for(var line = 0; line < lines.length-1; line++){
+                    //     console.log(line + " --> "+ lines[line]);
+                    // }
+                };
+                fr.readAsText(this.files[0]);
+            });
 
-                    }
-
-                });
-                // console.log(data1);
-                // MultiLinechartData.data.datasets[0].data = rfidarrayrec[0].Count;
-                // MultiLinechartData.data.datasets[0].label = rfidarrayrec[0].EPC;
-                // MultiLinechartData.data.datasets[1].data = rfidarrayrec[1].Count;
-                // MultiLinechartData.data.datasets[1].label = rfidarrayrec[1].EPC;
-                // MultiLinechartData.data.datasets[2].data = rfidarrayrec[2].Count;
-                // MultiLinechartData.data.datasets[2].label = rfidarrayrec[2].EPC;
-                // MultiLinechartData.data.datasets[3].data = rfidarrayrec[3].Count;
-                // MultiLinechartData.data.datasets[3].label = rfidarrayrec[3].EPC;
-                MultiLinechartData.data.labels = xValues;
-                // console.log(MultiLinechartData.data.datasets[0].data);
-                // console.log(MultiLinechartData.data.labels);
-                let mychart = new Chart("myLineChart", MultiLinechartData);
-                console.log(MultiLinechartData);
-                // for(var line = 0; line < lines.length-1; line++){
-                //     console.log(line + " --> "+ lines[line]);
-                // }
-            }
-            fr.readAsText(this.files[0]);
-
-        });
-
-        let rfidsole = function (rfid) {
+        let rfidsole = function(rfid) {
             // var len = rfid.length;
             let rfidres = [];
             let rfidarrayrecsort = [];
             let foundindex = -1;
 
-            var sid = rfid.filter(function (ele, pos) {
+            var sid = rfid.filter(function(ele, pos) {
                 // LoggerRFID.trace('rfidsole: ' + ele.EPC + ',' + pos + ',' + rfid.indexOf(ele.EPC));
                 var index;
                 for (let i = 0; i < rfid.length; i++) {
@@ -318,23 +309,29 @@
                 }
                 // console.log(index);
                 let EPCNum = {
-                    EPC: '',
-                    TID: '',
-                    TIME: '',
-                    Count: []
+                    EPC: "",
+                    TID: "",
+                    TIME: "",
+                    Count: [],
                 };
 
                 // console.log('rfidarrayrec:');
                 // console.log(rfidarrayrec);
 
-                let foundindexEPC = rfidarrayrec.findIndex(rank => rank.EPC === ele.EPC);
+                let foundindexEPC = rfidarrayrec.findIndex(
+                    (rank) => rank.EPC === ele.EPC
+                );
                 // console.log('foundindexEPC = ' + foundindexEPC);
                 if (foundindexEPC < 0) {
                     EPCNum.EPC = ele.EPC;
 
                     if (rfidarrayrec.length > 0) {
                         EPCNum.Count = Array(rfidarrayrec[0].Count.length).fill(0);
-                        console.log('Count.length= %s , EPC= %s', rfidarrayrec[0].Count.length, rfidarrayrec[0].EPC);
+                        console.log(
+                            "Count.length= %s , EPC= %s",
+                            rfidarrayrec[0].Count.length,
+                            rfidarrayrec[0].EPC
+                        );
                     }
 
                     // elem.Count.push(sid[i].COUNT);
@@ -350,18 +347,17 @@
             // console.log(sid);
 
             //Count
-            sid.forEach(elem => {
+            sid.forEach((elem) => {
                 for (let i = 0; i < rfid.length; i++) {
                     if (elem.EPC == rfid[i].EPC) {
-
                         elem.COUNT++;
                     }
                 }
             });
-            console.log('sid.length= ' + sid.length);
+            console.log("sid.length= " + sid.length);
             console.log(sid);
             //Count
-            rfidarrayrec.forEach(elem => {
+            rfidarrayrec.forEach((elem) => {
                 let i = 0;
                 for (i = 0; i < sid.length; i++) {
                     if (elem.EPC == sid[i].EPC) {
@@ -371,14 +367,15 @@
                     }
                 }
                 if (i === sid.length) {
-                    let foundindex = rfidarrayrec.findIndex(rank => rank.EPC === elem.EPC);
-                    console.log('foundindex = ' + foundindex);
+                    let foundindex = rfidarrayrec.findIndex(
+                        (rank) => rank.EPC === elem.EPC
+                    );
+                    console.log("foundindex = " + foundindex);
                     if (foundindex > -1) {
                         elem.Count.push(0);
                     }
                     console.log(elem);
                 }
-
             });
             console.log(rfidarrayrec);
             // sid.sort(function(a, b) {
@@ -390,10 +387,8 @@
 
             // console.log(sid);
             return sid;
-        }
-
+        };
     </script>
-
 </body>
 
 </html>
