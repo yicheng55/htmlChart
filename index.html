@@ -85,7 +85,7 @@
         let rfidarrayrec = []; //rfid data from reader, 保留 EPC + COUNT[]
         let endmaxlen = 10;
         let chartoffsetlen = 0;
-        let chartmaxlen = 600;
+        let chartmaxlen = 400;
 
         const MultiLinechartData = {
             type: "line",
@@ -179,6 +179,7 @@
                     data3 = [];
                     xValues = [];
                     let endcount = 0;
+                    let offsetcount = 0;
                     // console.log(this.result);
                     var fileContentArray = this.result.trim().split(/\r\n|\n/);
                     var lines = fileContentArray;
@@ -195,17 +196,24 @@
                             console.log("rfidarray.length=" + rfidarray.length);
                             if (rfidarray.length > 0) {
                                 endcount = 0
-                                let rfidsoled = rfidsole(rfidarray);
-                                console.log(rfidsoled[0].COUNT);
-                                if (rfidsoled.length === 2) {
-                                    console.log("rfidsoled[1]:" + rfidsoled[1].COUNT);
-                                    data2.push(rfidsoled[1].COUNT);
-                                } else {
-                                    data2.push(0);
+                                offsetcount++;
+                                if( offsetcount > chartoffsetlen)
+                                {
+
+                                    let rfidsoled = rfidsole(rfidarray);
+                                    console.log(rfidsoled[0].COUNT);
+                                    if (rfidsoled.length === 2) {
+                                        console.log("rfidsoled[1]:" + rfidsoled[1].COUNT);
+                                        data2.push(rfidsoled[1].COUNT);
+                                    } else {
+                                        data2.push(0);
+                                    }
+
+                                    data1.push(rfidsoled[0].COUNT);
+                                    xValues.push(rfidsoled[0].TIME.slice(11));
+
                                 }
 
-                                data1.push(rfidsoled[0].COUNT);
-                                xValues.push(rfidsoled[0].TIME.slice(11));
                             } else {
                                 let rfidsoled = [];
                                 let rfid = {
@@ -234,7 +242,7 @@
                                         elem.Count.push(0);
                                     });
                                     console.log('rfidarrayrec[0].Count.length = %s', rfidarrayrec[0].Count.length);
-                                    if(rfidarrayrec[0].Count.length > chartmaxlen)
+                                    if(rfidarrayrec[0].Count.length > chartoffsetlen + chartmaxlen)
                                     {
                                         endcount++;
                                         console.log('break endcount = %s', endcount);
