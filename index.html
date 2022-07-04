@@ -21,7 +21,7 @@
             height: 800px;
             overflow: hidden;
         } */
-        
+
         #scroll-container {
             width: calc(100% - 22px);
             height: calc(100vh - 240px);
@@ -83,6 +83,9 @@
         let data2 = [98, 450, 750, 900, 650, 988, 1550, 880, 600, 800, 1300];
         let data3 = [88, 800, 450, 550, 350, 820, 620, 730, 740, 660, 669];
         let rfidarrayrec = []; //rfid data from reader, 保留 EPC + COUNT[]
+        let endmaxlen = 10;
+        let chartoffsetlen = 0;
+        let chartmaxlen = 600;
 
         const MultiLinechartData = {
             type: "line",
@@ -175,19 +178,23 @@
                     data2 = [];
                     data3 = [];
                     xValues = [];
+                    let endcount = 0;
                     // console.log(this.result);
                     var fileContentArray = this.result.trim().split(/\r\n|\n/);
                     var lines = fileContentArray;
                     let tempstr = "";
                     let rfidarray = []; //rfid data from reader, 整理一次讀取只有RFID數據
                     console.log("lines.length=" + lines.length);
-                    lines.forEach(function(valstr, index, arr) {
+                    // lines.forEach(function(valstr, index, arr) {
+                    for (let i = 0; i < lines.length; i++) {
+                        valstr = lines[i];
                         // console.log(index + " --> "+ valstr.slice(53));
                         if (valstr.slice(53).includes("@END")) {
                             //讀取結束
 
                             console.log("rfidarray.length=" + rfidarray.length);
                             if (rfidarray.length > 0) {
+                                endcount = 0
                                 let rfidsoled = rfidsole(rfidarray);
                                 console.log(rfidsoled[0].COUNT);
                                 if (rfidsoled.length === 2) {
@@ -226,6 +233,19 @@
                                     rfidarrayrec.forEach(function(elem, index) {
                                         elem.Count.push(0);
                                     });
+                                    console.log('rfidarrayrec[0].Count.length = %s', rfidarrayrec[0].Count.length);
+                                    if(rfidarrayrec[0].Count.length > chartmaxlen)
+                                    {
+                                        endcount++;
+                                        console.log('break endcount = %s', endcount);
+                                        // 連續看到 "@END" endmaxlen 就結束
+                                        if(endcount >= endmaxlen)
+                                        {
+                                            // console.log('break endcount = %s', endcount);
+                                            break;
+                                        }
+                                    }
+
                                 }
                             }
                             rfidarray = []; //Reset array
@@ -244,7 +264,7 @@
                             // console.log(rfid.TIME);
                             rfidarray.push(rfid);
                         }
-                    });
+                    }
                     console.log("myLineChart");
 
                     console.log(
