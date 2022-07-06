@@ -181,6 +181,7 @@
             return color;
         }
 
+        let time = 0;
         document.getElementById('inputsubmit').onclick = function() {
 
             let chartoffsetlenAA = document.getElementById('chartoffsetlen').value;
@@ -188,44 +189,105 @@
             console.log('chartoffsetlen = %s', chartoffsetlenAA);
             console.log('chartmaxlen = %s', chartmaxlenAA);
 
-            MultiLinechartData.data.labels = xValues;
+            // MultiLinechartData.data.labels = xValues;
             // console.log(MultiLinechartData.data.datasets[0].data);
             // console.log(MultiLinechartData.data.labels);
 
             chartoffsetlen = chartoffsetlenAA;
             chartmaxlen = chartmaxlenAA;
-
+            // MultiLinechartData.data.labels = xValues.slice(20);
             // let mychart = document.getElementById('myLineChart')
             console.log(mychart);
 
-            // if (mychart !== 0) {
-            //     mychart.destroy();
-            //     console.log(mychart);
-            // }
 
-            // mychart = new Chart("myLineChart", MultiLinechartData);
-            // console.log(MultiLinechartData);
+            console.log('datasets.length = %s ', MultiLinechartData.data.datasets.length);
+            MultiLinechartData.data.datasets.forEach(function(elem, index, arr) {
+                elem.data.shift();
+            });
 
-            // alert('Test...');
-            // var file = this.files[0];
-            // var reader = new FileReader();
-            // reader.onload = function(progressEvent){
-            //     var fileContentArray = this.result.split(/\r\n|\n/);
-            //     var lines = fileContentArray;
-            //     for(var line = 0; line < lines.length-1; line++){
-            //     console.log(line + " --> "+ lines[line]);
+            console.log('labels.length = %s ', MultiLinechartData.data.labels.length);
+            MultiLinechartData.data.labels.shift();
+
+            // MultiLinechartData.data.labels.forEach(function(elem, index, arr) {
+            //     // console.log(elem);
+            //     // elem.labels.shift();
+            // });
+
+            // mychart.update();
+
+
+
+            // // 範例程式每次增加一筆紀錄更新 使用 ajax 方式更  chart
+            // let currentTime = ++time
+            // currentValue = Math.random() * 15;
+            // mychart.data.labels.push(currentTime);
+            // mychart.data.datasets[0].data.push(currentValue);
+
+            // mychart.update();
+
+            // 使用 ajax 方式更  chart
+            // var ajaxCallLiveSubs = function(){
+            // // endopoint
+            // var url = 'https://jsonplaceholder.typicode.com/posts/1';
+            // var interval = 5000;
+            // var time = 0;
+            // // Live Subs Charts
+            // var ctx_live = document.getElementById("myChart");
+            // var liveChart = new Chart(ctx_live, {
+            //     type: 'line',
+            //     data: {
+            //         labels: [],
+            //         datasets: [{
+            //             data: [],
+            //             borderWidth: 1,
+            //             borderColor:'#00c0ef',
+            //             label: 'liveCount',
+            //         }]
+            //     },
+            //     options: {
+            //         responsive: true,
+            //         maintainAspectRatio: false,
+            //         legend: {
+            //             display: false
+            //         },
+            //         scales: {
+            //             yAxes: [{
+            //                 ticks: {
+            //                     beginAtZero:true,
+            //                 }
+            //             }]
+            //         }
             //     }
+            // });
+
+            // var doAjax = function() {
+            //     $.ajax({
+            //                 url: url,
+            //                 success: function(){
+            //                     var currentTime = ++time
+            //                     var currentValue = Math.random()*1000;
+            //                     liveChart.data.labels.push(currentTime);
+            //                     liveChart.data.datasets[0].data.push(currentValue);
+
+            //                     liveChart.update();
+
+            //                 },
+            //                 complete: function () {
+            //                         // Schedule the next
+            //                         setTimeout(doAjax, interval);
+            //                 }
+            //             });
             // };
-            // reader.readAsText(file);
+            // doAjax();
+            // };
+            // ajaxCallLiveSubs();
         };
+
 
         document
             .getElementById("inputfile")
             .addEventListener("change", function() {
                 let fr = new FileReader();
-
-                // rfidarrayrec.push(5,8);
-                // console.log(rfidarrayrec);
 
                 fr.onload = function() {
                     document.getElementById("output").textContent = fr.result;
