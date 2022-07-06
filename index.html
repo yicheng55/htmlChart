@@ -43,25 +43,29 @@
         <canvas id="myLineChart" style="width:100%;max-width:1840px"></canvas>
     </div> -->
 
-    <label for="html">輸入檔案</label>
-    <input type="file" name="inputfile" id="inputfile" />
-    <label for="html">起始位置:</label>
-    <select name="chartoffsetlen" id="chartoffsetlen">
-        <option value="0"> 000</option>
-        <option value="200">200</option>
-        <option value="400">400</option>
-        <option value="600">600</option>
-        <option value="800">800</option>
-    </select>
+    <div>
+        <!-- <form action=""> -->
+        <label for="html">輸入檔案</label>
+        <input type="file" name="inputfile" id="inputfile" />
+        <label for="html">起始位置:</label>
+        <select name="chartoffsetlen" id="chartoffsetlen">
+                <option value="0"> 000</option>
+                <option value="200">200</option>
+                <option value="400">400</option>
+                <option value="600">600</option>
+                <option value="800">800</option>
+            </select>
 
-    <label for="html">資料長度</label>
-    <select name="chartmaxlen" id="chartmaxlen">
-        <option value="200">200</option>
-        <option value="400">400</option>
-        <option value="600">600</option>
-        <option value="800">800</option>
-    </select>
-
+        <label for="html">資料長度</label>
+        <select name="chartmaxlen" id="chartmaxlen">
+                <option value="200">200</option>
+                <option value="400">400</option>
+                <option value="600">600</option>
+                <option value="800">800</option>
+            </select>
+        <input type="submit" value="Submit">
+        <!-- </form> -->
+    </div>
     <!-- <input type="text" name="chartmaxlen" id="chartmaxlen" /> -->
 
     <!-- <label for="html">起始位置</label>
@@ -72,9 +76,9 @@
 
     <!-- <input type="file" name="inputfile1" id="inputfile1">
     <br> -->
-
-    <pre id="output"></pre>
-
+    <div>
+        <pre id="output"></pre>
+    </div>
     <script>
         // (function(){
         //     var data,
@@ -142,7 +146,7 @@
                 plugins: {
                     title: {
                         display: true,
-                        text: "Software developers in organization",
+                        text: "TA ID 曲線圖  ",
                     },
                 },
                 scales: {
