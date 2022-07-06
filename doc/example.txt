@@ -1,0 +1,93 @@
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
+<canvas id="chart"></canvas>
+<button id="add1">Add index 7</button>
+<button id="remove1">Remove index 7</button>
+<button id="add2">Add to end</button>
+<button id="remove2">Remove from end</button>
+
+
+
+
+
+
+// same as original function; inserts or updates index 7.
+function addData(e) {
+  myBarChart.data.labels[7] = "Ekologisk palmolja";
+  myBarChart.data.datasets[0].data[7] = 14;
+  myBarChart.update();
+}
+
+// requested function; removes index 7.
+function removeData(e) {
+  myBarChart.data.labels.splice(7, 1);
+  myBarChart.data.datasets[0].data.splice(7, 1);
+  myBarChart.update();
+}
+
+// example of how to add data point to end of dataset.
+function pushData(e) {
+  myBarChart.data.labels.push("Ekologisk palmolja");
+  myBarChart.data.datasets[0].data.push(14);
+  myBarChart.update();
+}
+
+// example of how to remove data point from end of dataset.
+function popData(e) {
+  myBarChart.data.labels.pop();
+  myBarChart.data.datasets[0].data.pop();
+  myBarChart.update();
+}
+
+// set listeners on buttons
+document.getElementById('add1').addEventListener('click', addData);
+document.getElementById('remove1').addEventListener('click', removeData);
+document.getElementById('add2').addEventListener('click', pushData);
+document.getElementById('remove2').addEventListener('click', popData);
+
+Chart.defaults.global.defaultFontColor = 'grey';
+Chart.defaults.global.defaultFontSize = 16;
+let myBarChart = new Chart(document.getElementById('chart'), {
+  type: 'bar',
+  data: {
+    labels: ["2012", "2013", "2014", "2015", "2016", "2017"],
+    datasets: [{
+      label: "Miljoner ton",
+      fill: true,
+      lineTension: 0.1,
+      backgroundColor: "rgba(0,255,0,0.4)",
+      borderColor: "green", // The main line color
+      borderCapStyle: 'square',
+      pointBorderColor: "white",
+      pointBackgroundColor: "green",
+      pointBorderWidth: 1,
+      pointHoverRadius: 8,
+      pointHoverBackgroundColor: "yellow",
+      pointHoverBorderColor: "green",
+      pointHoverBorderWidth: 2,
+      pointRadius: 4,
+      pointHitRadius: 10,
+      data: [56.38, 59.3, 61.81, 58.83, 52.32, 66.86],
+      spanGaps: true
+    }]
+  },
+  options: {
+    maintainAspectRatio: false,
+    scales: {
+      yAxes: [{
+        ticks: {
+          beginAtZero: true
+        }
+      }]
+    },
+    title: {
+      fontSize: 18,
+      display: true,
+      text: 'Källa: Globallife.org',
+      position: 'bottom'
+    }
+  }
+});
+
+
+
+
