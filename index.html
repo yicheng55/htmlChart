@@ -117,6 +117,7 @@
         let endmaxlen = 10;
         let chartoffsetlen = 0;
         let chartmaxlen = 400;
+        let mychart = 0;
 
         const MultiLinechartData = {
             type: "line",
@@ -195,7 +196,13 @@
             chartmaxlen = chartmaxlenAA;
 
             // let mychart = document.getElementById('myLineChart')
-            // console.log(mychart);
+            console.log(mychart);
+
+            // if (mychart !== 0) {
+            //     mychart.destroy();
+            //     console.log(mychart);
+            // }
+
             // mychart = new Chart("myLineChart", MultiLinechartData);
             // console.log(MultiLinechartData);
 
@@ -358,8 +365,8 @@
                     MultiLinechartData.data.labels = xValues;
                     // console.log(MultiLinechartData.data.datasets[0].data);
                     // console.log(MultiLinechartData.data.labels);
-                    let mychart = document.getElementById('myLineChart')
-                    console.log(mychart);
+                    // let mychart = document.getElementById('myLineChart')
+                    // console.log(mychart);
 
                     mychart = new Chart("myLineChart", MultiLinechartData);
                     console.log(mychart);
