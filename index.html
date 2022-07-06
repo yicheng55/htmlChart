@@ -21,7 +21,7 @@
             height: 800px;
             overflow: hidden;
         } */
-        
+
         #scroll-container {
             width: calc(100% - 22px);
             height: calc(100vh - 140px);
@@ -199,23 +199,18 @@
             // let mychart = document.getElementById('myLineChart')
             console.log(mychart);
 
-
             console.log('datasets.length = %s ', MultiLinechartData.data.datasets.length);
             MultiLinechartData.data.datasets.forEach(function(elem, index, arr) {
-                elem.data.shift();
+                console.log(elem.data);
+                elem.data = elem.data.slice(20);
+                // elem.data.shift();
             });
 
             console.log('labels.length = %s ', MultiLinechartData.data.labels.length);
-            MultiLinechartData.data.labels.shift();
-
-            // MultiLinechartData.data.labels.forEach(function(elem, index, arr) {
-            //     // console.log(elem);
-            //     // elem.labels.shift();
-            // });
-
-            // mychart.update();
-
-
+            console.log(MultiLinechartData.data.labels);
+            MultiLinechartData.data.labels = MultiLinechartData.data.labels.slice(20);
+            // MultiLinechartData.data.labels.shift();
+            mychart.update();
 
             // // 範例程式每次增加一筆紀錄更新 使用 ajax 方式更  chart
             // let currentTime = ++time
