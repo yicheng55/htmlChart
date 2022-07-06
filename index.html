@@ -54,16 +54,19 @@
                 <option value="400">400</option>
                 <option value="600">600</option>
                 <option value="800">800</option>
+                <option value="1000">1000</option>
             </select>
 
         <label for="html">資料長度</label>
         <select name="chartmaxlen" id="chartmaxlen">
                 <option value="200">200</option>
-                <option value="400">400</option>
+                <option selected="selected" value="400">400</option>
                 <option value="600">600</option>
                 <option value="800">800</option>
+                <option value="1000">1000</option>
+                <option value="1200">1200</option>
             </select>
-        <input type="submit" value="Submit">
+        <input type="submit" value="Submit" id="inputsubmit">
         <!-- </form> -->
     </div>
     <!-- <input type="text" name="chartmaxlen" id="chartmaxlen" /> -->
@@ -177,19 +180,37 @@
             return color;
         }
 
-        // document.getElementById('inputfile1').onclick = function(){
-        //     // alert('Test...');
-        //     var file = this.files[0];
-        //     var reader = new FileReader();
-        //     reader.onload = function(progressEvent){
-        //         var fileContentArray = this.result.split(/\r\n|\n/);
-        //         var lines = fileContentArray;
-        //         for(var line = 0; line < lines.length-1; line++){
-        //         console.log(line + " --> "+ lines[line]);
-        //         }
-        //     };
-        //     reader.readAsText(file);
-        // };
+        document.getElementById('inputsubmit').onclick = function() {
+
+            let chartoffsetlenAA = document.getElementById('chartoffsetlen').value;
+            let chartmaxlenAA = document.getElementById('chartmaxlen').value;
+            console.log('chartoffsetlen = %s', chartoffsetlenAA);
+            console.log('chartmaxlen = %s', chartmaxlenAA);
+
+            MultiLinechartData.data.labels = xValues;
+            // console.log(MultiLinechartData.data.datasets[0].data);
+            // console.log(MultiLinechartData.data.labels);
+
+            chartoffsetlen = chartoffsetlenAA;
+            chartmaxlen = chartmaxlenAA;
+
+            // let mychart = document.getElementById('myLineChart')
+            // console.log(mychart);
+            // mychart = new Chart("myLineChart", MultiLinechartData);
+            // console.log(MultiLinechartData);
+
+            // alert('Test...');
+            // var file = this.files[0];
+            // var reader = new FileReader();
+            // reader.onload = function(progressEvent){
+            //     var fileContentArray = this.result.split(/\r\n|\n/);
+            //     var lines = fileContentArray;
+            //     for(var line = 0; line < lines.length-1; line++){
+            //     console.log(line + " --> "+ lines[line]);
+            //     }
+            // };
+            // reader.readAsText(file);
+        };
 
         document
             .getElementById("inputfile")
@@ -213,6 +234,8 @@
                     var lines = fileContentArray;
                     let tempstr = "";
                     let rfidarray = []; //rfid data from reader, 整理一次讀取只有RFID數據
+                    console.log('chartoffsetlen = %s', chartoffsetlen);
+                    console.log('chartmaxlen = %s', chartmaxlen);
                     console.log("lines.length=" + lines.length);
                     // lines.forEach(function(valstr, index, arr) {
                     for (let i = 0; i < lines.length; i++) {
@@ -335,8 +358,13 @@
                     MultiLinechartData.data.labels = xValues;
                     // console.log(MultiLinechartData.data.datasets[0].data);
                     // console.log(MultiLinechartData.data.labels);
-                    let mychart = new Chart("myLineChart", MultiLinechartData);
-                    console.log(MultiLinechartData);
+                    let mychart = document.getElementById('myLineChart')
+                    console.log(mychart);
+
+                    mychart = new Chart("myLineChart", MultiLinechartData);
+                    console.log(mychart);
+
+                    // console.log(MultiLinechartData);
                     // for(var line = 0; line < lines.length-1; line++){
                     //     console.log(line + " --> "+ lines[line]);
                     // }
