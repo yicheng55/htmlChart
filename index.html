@@ -21,7 +21,7 @@
             height: 800px;
             overflow: hidden;
         } */
-
+        
         #scroll-container {
             width: calc(100% - 22px);
             height: calc(100vh - 140px);
@@ -148,7 +148,9 @@
                 }, ],
             },
             options: {
-                legend: {display: false},
+                legend: {
+                    display: false
+                },
                 plugins: {
                     title: {
                         display: true,
@@ -183,7 +185,7 @@
             return color;
         }
 
-        let time = 0;
+        let cntlen = 0;
         document.getElementById('inputsubmit').onclick = function() {
 
             let chartoffsetlenAA = document.getElementById('chartoffsetlen').value;
@@ -202,15 +204,20 @@
             console.log(mychart);
 
             console.log('datasets.length = %s ', MultiLinechartData.data.datasets.length);
+            cntlen = MultiLinechartData.data.labels.length;
+            console.log('cntlen = %s', cntlen);
+
+            // 向右移 offset
+            cntlen -= 20;
             MultiLinechartData.data.datasets.forEach(function(elem, index, arr) {
                 console.log(elem.data);
-                elem.data = elem.data.slice(20);
+                elem.data = elem.data.slice(0, cntlen);
                 // elem.data.shift();
             });
 
             console.log('labels.length = %s ', MultiLinechartData.data.labels.length);
-            console.log(MultiLinechartData.data.labels);
-            MultiLinechartData.data.labels = MultiLinechartData.data.labels.slice(20);
+            // console.log(MultiLinechartData.data.labels);
+            MultiLinechartData.data.labels = MultiLinechartData.data.labels.slice(0, cntlen);
             // MultiLinechartData.data.labels.shift();
             mychart.update();
 
