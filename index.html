@@ -2,6 +2,7 @@
 <html>
 
 <head>
+    <meta charset="utf-8">
     <title>Chart.js-Multi line charts</title>
     <!-- <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.js"></script> -->
     <!-- <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> -->
@@ -21,7 +22,7 @@
             height: 800px;
             overflow: hidden;
         } */
-        
+
         #scroll-container {
             width: calc(100% - 22px);
             height: calc(100vh - 140px);
@@ -187,6 +188,13 @@
 
         let cntlen = 0;
         document.getElementById('inputsubmit').onclick = function() {
+            // // mychart.destroy();
+            // mychart.clear();
+            // mychart.destroy();
+            // console.log(mychart);
+            // // mychart.reset();
+            // // mychart.render();
+            // return ;
 
             let chartoffsetlenAA = document.getElementById('chartoffsetlen').value;
             let chartmaxlenAA = document.getElementById('chartmaxlen').value;
