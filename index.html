@@ -191,9 +191,16 @@
             // // mychart.destroy();
             // mychart.clear();
             // mychart.destroy();
+            // mychart = new Chart("myLineChart", MultiLinechartData);
             // console.log(mychart);
             // // mychart.reset();
-            // // mychart.render();
+            // mychart.render();
+
+            // if (mychart) {
+            //     mychart.clear();
+            //     mychart.destroy();
+            //     // delete mychart;
+            // }
             // return ;
 
             let chartoffsetlenAA = document.getElementById('chartoffsetlen').value;
@@ -218,7 +225,7 @@
             // 向右移 offset
             cntlen -= 20;
             MultiLinechartData.data.datasets.forEach(function(elem, index, arr) {
-                console.log(elem.data);
+                // console.log(elem.data);
                 elem.data = elem.data.slice(0, cntlen);
                 // elem.data.shift();
             });
@@ -228,7 +235,8 @@
             MultiLinechartData.data.labels = MultiLinechartData.data.labels.slice(0, cntlen);
             // MultiLinechartData.data.labels.shift();
             mychart.update();
-            // mychart.destroy();    //開新檔案此方式無法使用..必須要更新(F5).
+            // mychart = new Chart("myLineChart", MultiLinechartData);
+            // mychart.destroy();    //可以使用後再 new Chart
 
             // // 範例程式每次增加一筆紀錄更新 使用 ajax 方式更  chart
             // let currentTime = ++time
@@ -309,6 +317,7 @@
                     data2 = [];
                     data3 = [];
                     xValues = [];
+                    rfidarrayrec = [];
                     let endcount = 0;
                     let offsetcount = 0;
                     // console.log(this.result);
@@ -423,33 +432,21 @@
                             MultiLinechartData.data.datasets.push(datasets);
                         }
                     });
-                    // console.log(data1);
-                    // MultiLinechartData.data.datasets[0].data = rfidarrayrec[0].Count;
-                    // MultiLinechartData.data.datasets[0].label = rfidarrayrec[0].EPC;
-                    // MultiLinechartData.data.datasets[1].data = rfidarrayrec[1].Count;
-                    // MultiLinechartData.data.datasets[1].label = rfidarrayrec[1].EPC;
-                    // MultiLinechartData.data.datasets[2].data = rfidarrayrec[2].Count;
-                    // MultiLinechartData.data.datasets[2].label = rfidarrayrec[2].EPC;
-                    // MultiLinechartData.data.datasets[3].data = rfidarrayrec[3].Count;
-                    // MultiLinechartData.data.datasets[3].label = rfidarrayrec[3].EPC;
                     MultiLinechartData.data.labels = xValues;
-                    // console.log(MultiLinechartData.data.datasets[0].data);
-                    // console.log(MultiLinechartData.data.labels);
-                    // let mychart = document.getElementById('myLineChart')
-                    // console.log(mychart);
 
                     console.log(
                         "data.datasets = %s",
                         MultiLinechartData.data.datasets.length
                     );
 
+                    if (mychart) {
+                        mychart.clear();
+                        mychart.destroy();
+                        // delete mychart;
+                    }
+
                     mychart = new Chart("myLineChart", MultiLinechartData);
                     console.log(mychart);
-
-                    // console.log(MultiLinechartData);
-                    // for(var line = 0; line < lines.length-1; line++){
-                    //     console.log(line + " --> "+ lines[line]);
-                    // }
                 };
                 fr.readAsText(this.files[0]);
             });
