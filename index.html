@@ -220,6 +220,7 @@
             MultiLinechartData.data.labels = MultiLinechartData.data.labels.slice(0, cntlen);
             // MultiLinechartData.data.labels.shift();
             mychart.update();
+            // mychart.destroy();    //開新檔案此方式無法使用..必須要更新(F5).
 
             // // 範例程式每次增加一筆紀錄更新 使用 ajax 方式更  chart
             // let currentTime = ++time
@@ -396,11 +397,6 @@
                     }
                     console.log("myLineChart");
 
-                    console.log(
-                        "data.datasets = %s",
-                        MultiLinechartData.data.datasets.length
-                    );
-
                     rfidarrayrec.forEach(function(elem, index, arr) {
                         if (index < MultiLinechartData.data.datasets.length) {
                             MultiLinechartData.data.datasets[index].data = elem.Count;
@@ -433,6 +429,11 @@
                     // console.log(MultiLinechartData.data.labels);
                     // let mychart = document.getElementById('myLineChart')
                     // console.log(mychart);
+
+                    console.log(
+                        "data.datasets = %s",
+                        MultiLinechartData.data.datasets.length
+                    );
 
                     mychart = new Chart("myLineChart", MultiLinechartData);
                     console.log(mychart);
