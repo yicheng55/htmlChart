@@ -312,6 +312,7 @@
             .getElementById("inputfile")
             .addEventListener("change", function() {
                 let fr = new FileReader();
+                console.log(fr);
 
                 fr.onload = function() {
                     document.getElementById("output").textContent = fr.result;
@@ -452,7 +453,12 @@
                     mychart = new Chart("myLineChart", MultiLinechartData);
                     console.log(mychart);
                 };
-                fr.readAsText(this.files[0]);
+
+                console.log(this.files[0]);
+                if (this.files[0]) {
+                    fr.readAsText(this.files[0]);
+                }
+
             });
 
         let rfidsole = function(rfid) {
