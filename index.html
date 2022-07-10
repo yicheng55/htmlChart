@@ -22,7 +22,7 @@
             height: 800px;
             overflow: hidden;
         } */
-        
+
         #scroll-container {
             width: calc(100% - 22px);
             height: calc(100vh - 140px);
@@ -71,6 +71,12 @@
                 <option value="1200">1200</option>
             </select>
         <input type="submit" value="Submit" id="inputsubmit">
+
+        <label for="html">讀取資料總長度:</label>
+        <input type="text" name="totallen" id="totallen" readonly="readonly" />
+
+        <!-- <label for="html">讀取資料總長度:</label> -->
+        <!-- 讀取資料總長度: <input type="text" name="totallen" id="totallen" readonly="readonly" /> -->
         <!-- </form> -->
     </div>
     <!-- <input type="text" name="chartmaxlen" id="chartmaxlen" /> -->
@@ -217,27 +223,65 @@
 
             chartoffsetlen = chartoffsetlenAA;
             chartmaxlen = chartmaxlenAA;
-            // MultiLinechartData.data.labels = xValues.slice(20);
-            // let mychart = document.getElementById('myLineChart')
-            console.log(mychart);
 
-            console.log('datasets.length = %s ', MultiLinechartData.data.datasets.length);
-            cntlen = MultiLinechartData.data.labels.length;
-            console.log('cntlen = %s', cntlen);
 
-            // 向右移 offset
-            cntlen -= 20;
-            MultiLinechartData.data.datasets.forEach(function(elem, index, arr) {
-                // console.log(elem.data);
-                elem.data = elem.data.slice(0, cntlen);
-                // elem.data.shift();
+
+            rfidarrayrec.forEach(function(elem, index, arr) {
+                if (index < MultiLinechartData.data.datasets.length) {
+                    MultiLinechartData.data.datasets[index].data = elem.Count.slice(chartoffsetlenAA,(parseInt(chartoffsetlenAA) + parseInt(chartmaxlenAA)));
+                    console.log("datasets[%s].data = %s", index, MultiLinechartData.data.datasets[index].data.length);
+                    // MultiLinechartData.data.datasets[index].data = elem.Count.slice(0,200);
+                    MultiLinechartData.data.datasets[index].label =
+                        elem.EPC.slice(0, 2) + "xx" + elem.EPC.slice(21);
+                } else {
+                    let datasets = {
+                        label: "Chart Js Developer",
+                        lineTension: 0,
+                        borderColor: getRandomColor(),
+                        data: [],
+                    };
+                    datasets.data = elem.Count.slice(chartoffsetlenAA,(parseInt(chartoffsetlenAA) + parseInt(chartmaxlenAA)));
+                    console.log("datasets[%s].data = %s", index, MultiLinechartData.data.datasets[index].data.length);
+                    datasets.label =
+                        elem.EPC.slice(0, 2) + "xx" + elem.EPC.slice(20);
+                    MultiLinechartData.data.datasets.push(datasets);
+                }
             });
 
-            console.log('labels.length = %s ', MultiLinechartData.data.labels.length);
-            // console.log(MultiLinechartData.data.labels);
-            MultiLinechartData.data.labels = MultiLinechartData.data.labels.slice(0, cntlen);
-            // MultiLinechartData.data.labels.shift();
+            console.log("chartoffsetlenAA + chartmaxlenAA = %s", (parseInt(chartoffsetlenAA) + parseInt(chartmaxlenAA)));
+            MultiLinechartData.data.labels = xValues.slice(chartoffsetlenAA,(parseInt(chartoffsetlenAA) + parseInt(chartmaxlenAA)));
+            // MultiLinechartData.data.labels = xValues.slice(0,200);
+            console.log("data.labels.length = %s", MultiLinechartData.data.labels.length );
+            console.log(
+                "data.datasets = %s",
+                MultiLinechartData.data.datasets.length
+            );
             mychart.update();
+
+
+            // MultiLinechartData.data.labels = xValues.slice(20);
+            // let mychart = document.getElementById('myLineChart')
+            // console.log(mychart);
+
+            // console.log('datasets.length = %s ', MultiLinechartData.data.datasets.length);
+            // cntlen = MultiLinechartData.data.labels.length;
+            // console.log('cntlen = %s', cntlen);
+
+            // // 向右移 offset
+            // cntlen -= 20;
+            // MultiLinechartData.data.datasets.forEach(function(elem, index, arr) {
+            //     // console.log(elem.data);
+            //     elem.data = elem.data.slice(0, cntlen);
+            //     // elem.data.shift();
+            // });
+
+            // console.log('labels.length = %s ', MultiLinechartData.data.labels.length);
+            // // console.log(MultiLinechartData.data.labels);
+            // MultiLinechartData.data.labels = MultiLinechartData.data.labels.slice(0, cntlen);
+            // // MultiLinechartData.data.labels.shift();
+            // mychart.update();
+
+            // ******************************
             // mychart = new Chart("myLineChart", MultiLinechartData);
             // mychart.destroy();    //可以使用後再 new Chart
 
@@ -417,10 +461,13 @@
                         }
                     }
                     console.log("myLineChart");
+                    let totallen = document.getElementById('totallen');
+                    totallen.value = rfidarrayrec[0].Count.length;
 
                     rfidarrayrec.forEach(function(elem, index, arr) {
                         if (index < MultiLinechartData.data.datasets.length) {
-                            MultiLinechartData.data.datasets[index].data = elem.Count;
+                            MultiLinechartData.data.datasets[index].data = elem.Count.slice(chartoffsetlen, (parseInt(chartoffsetlen) + parseInt(chartmaxlen)));
+                            // MultiLinechartData.data.datasets[index].data = elem.Count.slice(0,200);
                             MultiLinechartData.data.datasets[index].label =
                                 elem.EPC.slice(0, 2) + "xx" + elem.EPC.slice(21);
                         } else {
@@ -430,14 +477,15 @@
                                 borderColor: getRandomColor(),
                                 data: [],
                             };
-                            datasets.data = elem.Count;
+                            datasets.data = elem.Count.slice(chartoffsetlen, (parseInt(chartoffsetlen) + parseInt(chartmaxlen)));
                             datasets.label =
                                 elem.EPC.slice(0, 2) + "xx" + elem.EPC.slice(20);
                             MultiLinechartData.data.datasets.push(datasets);
                         }
                     });
-                    MultiLinechartData.data.labels = xValues;
-
+                    MultiLinechartData.data.labels = xValues.slice(chartoffsetlen, (parseInt(chartoffsetlen) + parseInt(chartmaxlen)));
+                    // MultiLinechartData.data.labels = xValues.slice(0,200);
+                    console.log("data.labels.length = %s", MultiLinechartData.data.labels.length );
                     console.log(
                         "data.datasets = %s",
                         MultiLinechartData.data.datasets.length
