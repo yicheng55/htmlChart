@@ -22,7 +22,7 @@
             height: 800px;
             overflow: hidden;
         } */
-
+        
         #scroll-container {
             width: calc(100% - 22px);
             height: calc(100vh - 140px);
@@ -130,7 +130,7 @@
         let rfidarrayrec = []; //rfid data from reader, 保留 EPC + COUNT[]
         let endmaxlen = 10;
         let chartoffsetlen = 0;
-        let chartmaxlen = 400;
+        let chartmaxlen = 2000;
         let mychart = 0;
 
         const MultiLinechartData = {
@@ -232,7 +232,7 @@
 
             rfidarrayrec.forEach(function(elem, index, arr) {
                 if (index < MultiLinechartData.data.datasets.length) {
-                    MultiLinechartData.data.datasets[index].data = elem.Count.slice(chartoffsetlenAA,(parseInt(chartoffsetlenAA) + parseInt(chartmaxlenAA)));
+                    MultiLinechartData.data.datasets[index].data = elem.Count.slice(chartoffsetlenAA, (parseInt(chartoffsetlenAA) + parseInt(chartmaxlenAA)));
                     console.log("datasets[%s].data = %s", index, MultiLinechartData.data.datasets[index].data.length);
                     // MultiLinechartData.data.datasets[index].data = elem.Count.slice(0,200);
                     MultiLinechartData.data.datasets[index].label =
@@ -244,7 +244,7 @@
                         borderColor: getRandomColor(),
                         data: [],
                     };
-                    datasets.data = elem.Count.slice(chartoffsetlenAA,(parseInt(chartoffsetlenAA) + parseInt(chartmaxlenAA)));
+                    datasets.data = elem.Count.slice(chartoffsetlenAA, (parseInt(chartoffsetlenAA) + parseInt(chartmaxlenAA)));
                     console.log("datasets[%s].data = %s", index, MultiLinechartData.data.datasets[index].data.length);
                     datasets.label =
                         elem.EPC.slice(0, 2) + "xx" + elem.EPC.slice(20);
@@ -253,9 +253,9 @@
             });
 
             console.log("chartoffsetlenAA + chartmaxlenAA = %s", (parseInt(chartoffsetlenAA) + parseInt(chartmaxlenAA)));
-            MultiLinechartData.data.labels = xValues.slice(chartoffsetlenAA,(parseInt(chartoffsetlenAA) + parseInt(chartmaxlenAA)));
+            MultiLinechartData.data.labels = xValues.slice(chartoffsetlenAA, (parseInt(chartoffsetlenAA) + parseInt(chartmaxlenAA)));
             // MultiLinechartData.data.labels = xValues.slice(0,200);
-            console.log("data.labels.length = %s", MultiLinechartData.data.labels.length );
+            console.log("data.labels.length = %s", MultiLinechartData.data.labels.length);
             console.log(
                 "data.datasets = %s",
                 MultiLinechartData.data.datasets.length
@@ -371,7 +371,7 @@
                     xValues = [];
                     rfidarrayrec = [];
                     // Reset object array default = 4.
-                    MultiLinechartData.data.datasets = MultiLinechartData.data.datasets.slice(0,4)
+                    MultiLinechartData.data.datasets = MultiLinechartData.data.datasets.slice(0, 4)
                     let endcount = 0;
                     let offsetcount = 0;
                     // console.log(this.result);
@@ -472,7 +472,7 @@
 
                     rfidarrayrec.forEach(function(elem, index, arr) {
                         if (index < MultiLinechartData.data.datasets.length) {
-                            MultiLinechartData.data.datasets[index].data = elem.Count.slice(chartoffsetlen, (parseInt(chartoffsetlen) + parseInt(chartmaxlen)));
+                            MultiLinechartData.data.datasets[index].data = elem.Count.slice(chartoffsetlen, (parseInt(chartoffsetlen) + parseInt(400)));
                             // MultiLinechartData.data.datasets[index].data = elem.Count.slice(0,200);
                             MultiLinechartData.data.datasets[index].label =
                                 elem.EPC.slice(0, 2) + "xx" + elem.EPC.slice(21);
@@ -483,15 +483,15 @@
                                 borderColor: getRandomColor(),
                                 data: [],
                             };
-                            datasets.data = elem.Count.slice(chartoffsetlen, (parseInt(chartoffsetlen) + parseInt(chartmaxlen)));
+                            datasets.data = elem.Count.slice(chartoffsetlen, (parseInt(chartoffsetlen) + parseInt(400)));
                             datasets.label =
                                 elem.EPC.slice(0, 2) + "xx" + elem.EPC.slice(20);
                             MultiLinechartData.data.datasets.push(datasets);
                         }
                     });
-                    MultiLinechartData.data.labels = xValues.slice(chartoffsetlen, (parseInt(chartoffsetlen) + parseInt(chartmaxlen)));
+                    MultiLinechartData.data.labels = xValues.slice(chartoffsetlen, (parseInt(chartoffsetlen) + parseInt(400)));
                     // MultiLinechartData.data.labels = xValues.slice(0,200);
-                    console.log("data.labels.length = %s", MultiLinechartData.data.labels.length );
+                    console.log("data.labels.length = %s", MultiLinechartData.data.labels.length);
                     console.log(
                         "data.datasets = %s",
                         MultiLinechartData.data.datasets.length
