@@ -22,7 +22,7 @@
             height: 800px;
             overflow: hidden;
         } */
-        
+
         #scroll-container {
             width: calc(100% - 22px);
             height: calc(100vh - 140px);
@@ -39,7 +39,19 @@
             <canvas id="myLineChart"></canvas>
             <!-- <div id="container"></div> -->
         </div>
+        <div id="large-container">
+            <canvas id="resultsLineChart"></canvas>
+            <!-- <div id="container"></div> -->
+        </div>
     </div>
+
+    <!-- <div id="scroll-container"></div>
+        <div id="large-container">
+            <canvas id="resultsLineChart"></canvas>
+            <div id="container"></div>
+        </div>
+    </div> -->
+
     <!-- <div style="margin-left:5%;margin-right:5%">
         <canvas id="myLineChart" style="width:100%;max-width:1840px"></canvas>
     </div> -->
@@ -132,6 +144,7 @@
         let chartoffsetlen = 0;
         let chartmaxlen = 2000;
         let mychart = 0;
+        let resultschart =0;
 
         const MultiLinechartData = {
             type: "line",
@@ -189,6 +202,65 @@
                 },
             },
         };
+
+
+        const resultsMultiLinechartData = {
+            type: "line",
+            data: {
+                labels: xValues,
+                datasets: [{
+                    label: "JavaScript Developer",
+                    lineTension: 0,
+                    backgroundColor: "blue",
+                    borderColor: "blue",
+                    data: [],
+                }, {
+                    label: "React Developer",
+                    lineTension: 0,
+                    // backgroundColor: "blue",
+                    borderColor: "green",
+                    data: [],
+                }, {
+                    label: "Chart Js Developer",
+                    lineTension: 0,
+                    borderColor: "red",
+                    data: [],
+                }, {
+                    label: "Chart Js Developer",
+                    lineTension: 0,
+                    borderColor: "brown",
+                    data: [],
+                }, ],
+            },
+            options: {
+                legend: {
+                    display: false
+                },
+                plugins: {
+                    title: {
+                        display: true,
+                        text: "TA ID 曲線圖  ",
+                    },
+                },
+                scales: {
+                    x: {
+                        display: true,
+                        title: {
+                            display: true,
+                            text: "Time",
+                        },
+                    },
+                    y: {
+                        display: true,
+                        title: {
+                            display: true,
+                            text: "Counts",
+                        },
+                    },
+                },
+            },
+        };
+
 
         function getRandomColor() {
             var letters = "0123456789ABCDEF";
@@ -471,6 +543,22 @@
                     totallen.value = rfidarrayrec[0].Count.length;
 
                     rfidarrayrec.forEach(function(elem, index, arr) {
+                        console.log(elem.EPC);
+
+                        if(elem.EPC[0] === 'C'){
+                            console.log(elem.EPC);
+                            console.log(elem.EPC);
+                            console.log(elem.EPC);
+                            resultsMultiLinechartData.data.datasets[0].data = elem.Count.slice(chartoffsetlen, (parseInt(chartoffsetlen) + parseInt(400)));
+                            // MultiLinechartData.data.datasets[index].data = elem.Count.slice(0,200);
+                            resultsMultiLinechartData.data.datasets[0].label =
+                                elem.EPC.slice(0, 2) + "xx" + elem.EPC.slice(21);
+
+                            resultsMultiLinechartData.data.labels = xValues.slice(chartoffsetlen, (parseInt(chartoffsetlen) + parseInt(400)));
+
+                        }
+
+
                         if (index < MultiLinechartData.data.datasets.length) {
                             MultiLinechartData.data.datasets[index].data = elem.Count.slice(chartoffsetlen, (parseInt(chartoffsetlen) + parseInt(400)));
                             // MultiLinechartData.data.datasets[index].data = elem.Count.slice(0,200);
@@ -506,6 +594,17 @@
 
                     mychart = new Chart("myLineChart", MultiLinechartData);
                     console.log(mychart);
+
+                    if (resultschart) {
+                        console.log('resultschart.destroy()');
+                        resultschart.clear();
+                        resultschart.destroy();
+                        // delete mychart;
+                    }
+
+                    resultschart = new Chart("resultsLineChart", resultsMultiLinechartData);
+                    console.log(mychart);
+
                 };
 
                 console.log(this.files[0]);
