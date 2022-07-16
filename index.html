@@ -303,6 +303,23 @@
 
 
             rfidarrayrec.forEach(function(elem, index, arr) {
+
+                console.log(elem.EPC);
+
+                if(elem.EPC[0] === 'C'){
+                    console.log(elem.EPC);
+                    console.log(elem.EPC);
+                    console.log(elem.EPC);
+                    resultsMultiLinechartData.data.datasets[0].data = elem.Count.slice(chartoffsetlenAA, (parseInt(chartoffsetlenAA) + parseInt(chartmaxlenAA)));
+                    // MultiLinechartData.data.datasets[index].data = elem.Count.slice(0,200);
+                    resultsMultiLinechartData.data.datasets[0].label =
+                        elem.EPC.slice(0, 2) + "xx" + elem.EPC.slice(21);
+
+                    resultsMultiLinechartData.data.labels = xValues.slice(chartoffsetlenAA, (parseInt(chartoffsetlenAA) + parseInt(chartmaxlenAA)));
+
+                }
+
+
                 if (index < MultiLinechartData.data.datasets.length) {
                     MultiLinechartData.data.datasets[index].data = elem.Count.slice(chartoffsetlenAA, (parseInt(chartoffsetlenAA) + parseInt(chartmaxlenAA)));
                     console.log("datasets[%s].data = %s", index, MultiLinechartData.data.datasets[index].data.length);
@@ -333,6 +350,8 @@
                 MultiLinechartData.data.datasets.length
             );
             mychart.update();
+
+            resultschart.update();
 
 
             // MultiLinechartData.data.labels = xValues.slice(20);
