@@ -136,9 +136,9 @@
         ];
 
         // let data1 = [100, 500, 600, 800, 700, 900, 1200, 850, 970, 750, 1100, 100, 500, 600, 800, 700, 900, 1200, 850, 970, 750, 1100];
-        let data1 = [];
-        let data2 = [98, 450, 750, 900, 650, 988, 1550, 880, 600, 800, 1300];
-        let data3 = [88, 800, 450, 550, 350, 820, 620, 730, 740, 660, 669];
+        // let data1 = [];
+        // let data2 = [98, 450, 750, 900, 650, 988, 1550, 880, 600, 800, 1300];
+        // let data3 = [88, 800, 450, 550, 350, 820, 620, 730, 740, 660, 669];
         let rfidarrayrec = []; //rfid data from reader, 保留 EPC + COUNT[]
         let rfidarrayrecResults = [];
         let rfidarrayrecResultsAA = [];
@@ -490,9 +490,9 @@
                 fr.onload = function() {
                     document.getElementById("output").textContent = fr.result;
                     console.log(fr.result.length);
-                    data1 = [];
-                    data2 = [];
-                    data3 = [];
+                    // data1 = [];
+                    // data2 = [];
+                    // data3 = [];
                     xValues = [];
                     rfidarrayrec = [];
                     // Reset object array default = 4.
@@ -522,14 +522,14 @@
 
                                     let rfidsoled = rfidsole(rfidarray);
                                     console.log(rfidsoled[0].COUNT);
-                                    if (rfidsoled.length === 2) {
-                                        console.log("rfidsoled[1]:" + rfidsoled[1].COUNT);
-                                        data2.push(rfidsoled[1].COUNT);
-                                    } else {
-                                        data2.push(0);
-                                    }
+                                    // if (rfidsoled.length === 2) {
+                                    //     console.log("rfidsoled[1]:" + rfidsoled[1].COUNT);
+                                    //     data2.push(rfidsoled[1].COUNT);
+                                    // } else {
+                                    //     data2.push(0);
+                                    // }
 
-                                    data1.push(rfidsoled[0].COUNT);
+                                    // data1.push(rfidsoled[0].COUNT);
                                     xValues.push(rfidsoled[0].TIME.slice(11));
 
                                 }
@@ -551,8 +551,8 @@
                                 // console.log(rfid.TIME);
                                 rfidsoled.push(rfid);
                                 // console.log(rfidsoled[0].COUNT);
-                                data1.push(rfidsoled[0].COUNT);
-                                data2.push(0);
+                                // data1.push(rfidsoled[0].COUNT);
+                                // data2.push(0);
 
                                 if (rfidarrayrec.length > 0) {
                                     console.log("rfidsoled:");
