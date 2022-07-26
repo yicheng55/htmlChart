@@ -22,7 +22,7 @@
             height: 800px;
             overflow: hidden;
         } */
-
+        
         #scroll-container {
             width: calc(100% - 22px);
             height: calc(100vh - 140px);
@@ -708,14 +708,14 @@
                     );
 
                     // if (mychart) {
-                    console.log('Start chartArray=%s ',chartArray);
+                    console.log('Start chartArray=%s ', chartArray);
                     // chartArray.forEach(function(mychart, index, arr) {
                     //     console.log('mychart.destroy()');
                     //     mychart.clear();
                     //     mychart.destroy();
                     //     // delete mychart;
                     // });
-                    console.log('End chartArray=%s ',chartArray);
+                    console.log('End chartArray=%s ', chartArray);
                     resultschart = new Chart("resultsLineChart", MultiLinechartDataArray[0]);
                     chartArray.push(resultschart);
                     console.log(resultschart);
@@ -792,7 +792,11 @@
             //Count
             sid.forEach((elem) => {
                 for (let i = 0; i < rfid.length; i++) {
-                    if (elem.EPC == rfid[i].EPC) {
+                    if (elem.EPC === rfid[i].EPC) {
+                        <!-- EPC = FFFFFFFFFFFFFF0000000000 為超音波偵測信號，每次 +4+1 -->
+                        if (elem.EPC[0] === 'F') {
+                            elem.COUNT += 4;
+                        }
                         elem.COUNT++;
                     }
                 }
