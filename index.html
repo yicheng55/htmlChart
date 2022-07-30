@@ -9,27 +9,27 @@
     <script src="js/chart.js"></script>
 
     <style>
-        body {
+        /* body {
             margin: 0;
             padding: 0;
             overflow: hidden;
             background-color: #f0f0f0;
             height: 90%;
             overflow: auto;
-        }
+        } */
         /* #large-container {
             width: 2000px;
             height: 400px;
             overflow: hidden;
         } */
 
-        #scroll-container {
+        /* #scroll-container {
             width: calc(100% - 2px);
             height: calc(100vh - 0px);
             overflow: auto;
             margin: 10px;
             border: 1px solid grey;
-        }
+        } */
     </style>
 </head>
 
@@ -543,6 +543,8 @@
                     // lines.forEach(function(valstr, index, arr) {
                     for (let i = 0; i < lines.length; i++) {
                         valstr = lines[i];
+						let sp = lines[i].split(' ')
+						console.log(sp);
                         // console.log(index + " --> "+ valstr.slice(53));
                         if (valstr.slice(53).includes("@END")) {
                             //讀取結束
